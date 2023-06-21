@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".app.ActivitySignUp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="20dp"
+
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/imgProfile"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/user_place_holder">
+        </ImageView>
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center_horizontal"
+            android:text="Upload Photo"
+            android:textSize="10dp"></Button>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create an Account"
+            android:textSize="20dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp" />
+
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="14dp"
+            android:maxLines="1"
+            android:layout_marginTop="45dp"
+            android:inputType="textPersonName"
+            android:drawableLeft="@drawable/baseline_person_24"
+            android:drawablePadding="5dp"
+            android:background="@drawable/bg_round_button_hollow"
+            android:hint="Enter your full Name"></EditText>
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/bg_round_button_hollow"
+            android:drawableLeft="@drawable/baseline_email_24"
+            android:drawablePadding="5dp"
+            android:hint="Enter your Email"
+            android:maxLines="1"
+
+            android:inputType="textEmailAddress"
+            android:padding="10dp"
+            android:textSize="14dp"></EditText>
+
+        <EditText
+            android:id="@+id/etPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="14dp"
+            android:layout_marginTop="5dp"
+            android:inputType="number"
+            android:maxLines="1"
+            android:maxLength="11"
+            android:drawableLeft="@drawable/baseline_local_phone_24"
+            android:drawablePadding="5dp"
+            android:background="@drawable/bg_round_button_hollow"
+            android:hint="Phone Number"></EditText>
+
+        <EditText
+            android:id="@+id/etCNIC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="14dp"
+            android:layout_marginTop="5dp"
+            android:inputType="number"
+            android:maxLines="1"
+            android:maxLength="13"
+            android:drawableLeft="@drawable/baseline_credit_card_24"
+            android:drawablePadding="5dp"
+            android:background="@drawable/bg_round_button_hollow"
+            android:hint="CNIC (without - dash )"></EditText>
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="14dp"
+            android:layout_marginTop="5dp"
+            android:maxLines="1"
+            android:inputType="textPassword"
+            android:drawableLeft="@drawable/baseline_lock_24"
+            android:drawablePadding="5dp"
+            android:background="@drawable/bg_round_button_hollow"
+            android:hint="Password"></EditText>
+
+
+        <EditText
+            android:id="@+id/etCPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="14dp"
+            android:layout_marginTop="5dp"
+            android:maxLines="1"
+
+            android:inputType="textPassword"
+            android:drawableLeft="@drawable/baseline_lock_24"
+            android:drawablePadding="5dp"
+            android:background="@drawable/bg_round_button_hollow"
+            android:hint="Confirm Password"></EditText>
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Register"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/white"
+            android:background="@drawable/bg_round_button"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Already have an account?"></TextView>
+
+            <TextView
+                android:id="@+id/tvSignin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:padding="5dp"
+                android:textStyle="bold"
+                android:text="Sign In"></TextView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</ScrollView>
