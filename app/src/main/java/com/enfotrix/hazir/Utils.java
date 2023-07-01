@@ -13,7 +13,7 @@ public class Utils {
     Context context;
     SharedPreferences pref;
     String MY_PREFS_NAME= "HazirPref";
-    String TOKEN="token", PHONE="Phone",CNIC="cnic",NAME="name";
+    String TOKEN="token", PHONE="Phone",CNIC="cnic",NAME="name", IS_FIRST_TIME="IS_FIRST_TIME";
     SharedPreferences.Editor editor;
 
 
@@ -29,6 +29,16 @@ public class Utils {
         if(!getToken().equals("null"))isLogedIn=true;
         return isLogedIn;
     }
+
+    public boolean IsFirstTime(){
+        boolean firstTime = pref.getBoolean(IS_FIRST_TIME, true);
+        if(firstTime){
+            editor.putBoolean(IS_FIRST_TIME, false);
+        }
+
+        return firstTime;
+    }
+
     public String getToken(){
         String token="null";
         if(pref.getString(TOKEN, null)!=null)

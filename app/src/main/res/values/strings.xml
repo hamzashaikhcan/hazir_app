@@ -3,4 +3,10 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">My Ads</string>
     <string name="title_notifications">Help</string>
+
+    <string name="ok">OK</string>
+    <string name="title_location_permission">Location Permission</string>
+    <string name="text_location_permission">Hazir App needs your location for accurate data</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

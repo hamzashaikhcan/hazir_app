@@ -4,9 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.FileUtils;
+import android.provider.OpenableColumns;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -17,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.enfotrix.hazir.Constant;
 import com.enfotrix.hazir.Loading;
 import com.enfotrix.hazir.MainActivity;
@@ -29,6 +38,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.jar.JarException;
@@ -41,6 +54,11 @@ public class ActivitySignUp extends AppCompatActivity {
     RequestQueue requestQueue;
     Utils utils;
 
+    private static final int FILE_SELECT_CODE = 0;
+
+    TextView selectBill;
+    String encodedBill;
+
     Constant constant;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +69,19 @@ public class ActivitySignUp extends AppCompatActivity {
         context= ActivitySignUp.this;
         constant= new Constant();
         utils= new Utils(context);
+
+        selectBill = findViewById(R.id.selectBill);
+
+        selectBill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                intent.setType("application/pdf");
+                startActivityForResult(intent, 1212);
+            }
+        });
+
         binding.tvSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -138,6 +169,58 @@ public class ActivitySignUp extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case 1212:
+                if (resultCode == RESULT_OK) {
+                    // Get the Uri of the selected file
+                    Uri uri = data.getData();
+                    String uriString = uri.toString();
+                    File myFile = new File(uriString);
+                    String path = myFile.getAbsolutePath();
+                    String displayName = null;
+
+
+                    if (uriString.startsWith("content://")) {
+                        Cursor cursor = null;
+                        try {
+                            InputStream imageStream = getContentResolver().openInputStream(uri);
+
+                            final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                            //String encodedImage = encodeImage(uri.getPath());
+                            encodedBill = encodeImage(selectedImage);
+
+                            cursor = getContentResolver().query(uri, null, null, null, null);
+                            if (cursor != null && cursor.moveToFirst()) {
+                                displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                                selectBill.setText("SELECTED: "+displayName);
+                            }
+                        } catch (FileNotFoundException e) {
+                            throw new RuntimeException(e);
+                        } finally {
+                            cursor.close();
+                        }
+                    } else if (uriString.startsWith("file://")) {
+                        displayName = myFile.getName();
+                        selectBill.setText("SELECTED: "+displayName);
+                    }
+                }
+                break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private String encodeImage(Bitmap bm)
+    {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.JPEG,100,baos);
+        byte[] b = baos.toByteArray();
+        String encImage = Base64.encodeToString(b, Base64.DEFAULT);
+
+        return encImage;
+    }
+
     public void reg(){
 
         Loading loading= new Loading(context);
@@ -191,6 +274,7 @@ public class ActivitySignUp extends AppCompatActivity {
                 params.put("phone_no", binding.etPhone.getText().toString());
                 params.put("password", binding.etPassword.getText().toString());
                 params.put("cnic", binding.etCNIC.getText().toString());
+                params.put("electricity_bill", encodedBill);
                 return params;
             };
         };

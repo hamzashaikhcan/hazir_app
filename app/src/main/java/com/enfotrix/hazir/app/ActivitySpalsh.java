@@ -38,9 +38,11 @@ public class ActivitySpalsh extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-
                 Utils utils= new Utils(context);
-                if(!utils.IsLogedIn()) binding.layNav.setVisibility(View.VISIBLE);
+                if(utils.IsFirstTime()){
+                    startActivity(new Intent(context, IntroActivity.class));
+                }
+                else if(!utils.IsLogedIn()) binding.layNav.setVisibility(View.VISIBLE);
                 else startActivity(new Intent(context, MainActivity.class));
             }
         }, 2000);

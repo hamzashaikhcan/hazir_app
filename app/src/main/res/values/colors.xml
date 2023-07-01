@@ -10,6 +10,8 @@
     <color name="secondry_color">#51A8B1</color>
     <color name="primary_color">#CA7246</color>
     <color name="primary_varient_color">#97502C</color>
+    <color name="colorAccent">#D81B60</color>
+
 
 
 </resources>

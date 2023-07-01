@@ -3,14 +3,9 @@ package com.enfotrix.hazir.ui.home;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
-import android.media.MediaSync;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.text.TextPaint;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,7 +17,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -31,19 +25,15 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.enfotrix.hazir.Adapters.AdapterCarAd;
 import com.enfotrix.hazir.Adapters.AdapterFeaturedCar;
 import com.enfotrix.hazir.Loading;
-import com.enfotrix.hazir.MainActivity;
 import com.enfotrix.hazir.Models.ModelCarAd;
 import com.enfotrix.hazir.Models.ModelFeaturedCar;
 import com.enfotrix.hazir.R;
@@ -52,43 +42,9 @@ import com.enfotrix.hazir.app.ActivityCarCtg;
 import com.enfotrix.hazir.app.ActivitySearch;
 import com.enfotrix.hazir.app.ActivitySignIn;
 import com.enfotrix.hazir.databinding.FragmentHomeBinding;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
-
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.view.View;
-import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.enfotrix.hazir.Loading;
-import com.enfotrix.hazir.MainActivity;
-import com.enfotrix.hazir.R;
-import com.enfotrix.hazir.databinding.ActivitySignInBinding;
-import com.enfotrix.hazir.databinding.ActivitySpalshBinding;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.DataInput;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -342,7 +298,7 @@ public class HomeFragment extends Fragment   {
         bottomSheetDialog.show();
     }
 
-    private void contactDialog(String WA, String Call,String Msg){
+    private void  contactDialog(String WA, String Call,String Msg){
 
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

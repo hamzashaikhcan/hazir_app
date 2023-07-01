@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#241e20"
+    tools:context=".app.Intro2Activity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/introtwo"></ImageView>
+
+    <Button
+        android:id="@+id/introtwo_next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Next"
+        android:background="#1B1416"
+        android:textColor="#fff"
+        android:layout_gravity="bottom"
+        />
+
+
+</FrameLayout>

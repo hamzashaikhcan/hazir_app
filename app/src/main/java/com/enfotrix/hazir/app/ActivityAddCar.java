@@ -176,6 +176,7 @@ public class ActivityAddCar extends AppCompatActivity {
     public void getImageToGallery(){
         Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
         getIntent.setType("image/*");
+        getIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         pickIntent.setType("image/*");
         Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
@@ -284,6 +285,7 @@ public class ActivityAddCar extends AppCompatActivity {
             Uri uri = data.getData();
             //Toast.makeText(context, uri.getPath()+"", Toast.LENGTH_SHORT).show();
 
+            System.console().printf("FILES => "+uri.getPath());
             Glide.with(context).load(new File(uri.getPath())) // Uri of the picture
                     .into(binding.imgCar);
 
