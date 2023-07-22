@@ -21,6 +21,7 @@ import android.util.Base64;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.enfotrix.hazir.Constant;
 import com.enfotrix.hazir.Loading;
 import com.enfotrix.hazir.MainActivity;
 import com.enfotrix.hazir.Models.ModelMyCar;
@@ -62,10 +64,19 @@ public class ActivityAddCar extends AppCompatActivity {
     int price;
     RequestQueue requestQueue;
     ModelMyCar modelMyCar;
-    public static final int PICK_IMAGE = 1;
+    public static final int PICK_IMAGE = 0;
+    public static final int PICK_IMAGE_1 = 1;
+    public static final int PICK_IMAGE_2 = 2;
+    public static final int PICK_IMAGE_3 = 3;
+    public static final int PICK_IMAGE_4 = 4;
+    public static final int PICK_IMAGE_5 = 5;
     boolean edit=false;
     String encodedImage;
     Utils utils;
+
+    ImageView car1, car2, car3, car4, car5;
+
+    String BASE_API = new Constant().getBaseURL();
 
 
     private static final int REQUEST_CODE_SELECT_PHOTO = 1;
@@ -99,6 +110,12 @@ public class ActivityAddCar extends AppCompatActivity {
         price=500;
         binding.tvRent.setText(price+" PKR");
 
+
+        car1 = findViewById(R.id.imgCar1);
+        car2 = findViewById(R.id.imgCar2);
+        car3 = findViewById(R.id.imgCar3);
+        car4 = findViewById(R.id.imgCar4);
+        car5 = findViewById(R.id.imgCar5);
 
         listSuzukiCarModel= new ArrayList<String>();//.add("Suzuki Ravi");
         listHondaCarModel= new ArrayList<String>();//.add("Honda CRV");
@@ -153,27 +170,63 @@ public class ActivityAddCar extends AppCompatActivity {
             }
         });
 
-        binding.btnUpload.setOnClickListener(new View.OnClickListener() {
+//        binding.btnUpload.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//
+//                //performExternalStorageOperation();
+//
+//                //checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE, STORAGE_PERMISSION_CODE);
+//
+//
+//                getImageToGallery();
+//
+//            }
+//        });
+
+        binding.btnUpload.setVisibility(View.GONE);
+
+        car1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                pickImageCar1(PICK_IMAGE_1);
+            }
+        });
 
+        car2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickImageCar1(PICK_IMAGE_2);
+            }
+        });
 
-                //performExternalStorageOperation();
+        car3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickImageCar1(PICK_IMAGE_3);
+            }
+        });
 
-                //checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE, STORAGE_PERMISSION_CODE);
+        car4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickImageCar1(PICK_IMAGE_4);
+            }
+        });
 
-
-                getImageToGallery();
-
+        car5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickImageCar1(PICK_IMAGE_5);
             }
         });
 
 
 
-
     }
 
-    public void getImageToGallery(){
+    public void pickImageCar1(int TYPE){
         Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
         getIntent.setType("image/*");
         getIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
@@ -181,7 +234,7 @@ public class ActivityAddCar extends AppCompatActivity {
         pickIntent.setType("image/*");
         Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
-        startActivityForResult(chooserIntent, PICK_IMAGE);
+        startActivityForResult(chooserIntent, TYPE);
     }
 
     public void checkPermission(String permission, int requestCode)
@@ -205,7 +258,7 @@ public class ActivityAddCar extends AppCompatActivity {
         if (isExternalStoragePermissionGranted()) {
             // External storage permission is already granted
             // Perform your desired operations here
-            getImageToGallery();
+            pickImageCar1(PICK_IMAGE_1);
 
         } else {
             // External storage permission is not granted
@@ -237,7 +290,7 @@ public class ActivityAddCar extends AppCompatActivity {
                 // External storage permission granted
                 // Perform your desired operations here
 
-                getImageToGallery();
+                pickImageCar1(PICK_IMAGE_1);
             } else {
                 // External storage permission denied
                 // Handle accordingly (e.g., show an error message, disable certain functionality)
@@ -267,12 +320,73 @@ public class ActivityAddCar extends AppCompatActivity {
 
     public boolean validate(){
         boolean validate=true;
-        if(binding.imgCar.getDrawable()==null) validate=false;
+        if(car1.getDrawable()==null) validate=false;
         else if(binding.etCarNumber.getText().toString().isEmpty()) validate=false;
         else if(binding.etCarRent.getText().toString().isEmpty()) validate=false;
         else if(binding.etDisc.getText().toString().isEmpty()) validate=false;
         return validate;
 
+    }
+
+    public void setImage(Intent data, int type){
+        Uri uri = data.getData();
+        //Toast.makeText(context, uri.getPath()+"", Toast.LENGTH_SHORT).show();
+
+        if(type == 1){
+            Glide.with(context).load(new File(uri.getPath())) // Uri of the picture
+                    .into(car1);
+        }
+        if(type == 2){
+            Glide.with(context).load(new File(uri.getPath())) // Uri of the picture
+                    .into(car2);
+        }
+        if(type == 3){
+            Glide.with(context).load(new File(uri.getPath())) // Uri of the picture
+                    .into(car3);
+        }
+        if(type == 4){
+            Glide.with(context).load(new File(uri.getPath())) // Uri of the picture
+                    .into(car4);
+        } if(type == 5){
+            Glide.with(context).load(new File(uri.getPath())) // Uri of the picture
+                    .into(car5);
+        }
+
+
+
+        try {
+            final InputStream imageStream;
+            imageStream = getContentResolver().openInputStream(uri);
+
+            final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+            if(type == 1){
+                Glide.with(context).load(selectedImage) // Uri of the picture
+                        .into(car1);
+            }
+            if(type == 2){
+                Glide.with(context).load(selectedImage) // Uri of the picture
+                        .into(car2);
+            }
+            if(type == 3){
+                Glide.with(context).load(selectedImage) // Uri of the picture
+                        .into(car3);
+            }
+            if(type == 4){
+                Glide.with(context).load(selectedImage) // Uri of the picture
+                        .into(car4);
+            }
+            if(type == 5){
+                Glide.with(context).load(selectedImage) // Uri of the picture
+                        .into(car5);
+            }
+
+            //String encodedImage = encodeImage(uri.getPath());
+            encodedImage = encodeImage(selectedImage);
+
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -281,29 +395,24 @@ public class ActivityAddCar extends AppCompatActivity {
         if (resultCode != RESULT_OK) {
             return;
         }
-        else if (requestCode == PICK_IMAGE) {
-            Uri uri = data.getData();
-            //Toast.makeText(context, uri.getPath()+"", Toast.LENGTH_SHORT).show();
-
-            System.console().printf("FILES => "+uri.getPath());
-            Glide.with(context).load(new File(uri.getPath())) // Uri of the picture
-                    .into(binding.imgCar);
-
-            try {
-                final InputStream imageStream;
-                imageStream = getContentResolver().openInputStream(uri);
-
-                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                Glide.with(context).load(selectedImage) // Uri of the picture
-                        .into(binding.imgCar);
-                //String encodedImage = encodeImage(uri.getPath());
-                encodedImage = encodeImage(selectedImage);
-
-
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-
+        else if (requestCode == PICK_IMAGE_1) {
+            setImage(data, 1);
+            car2.setVisibility(View.VISIBLE);
+        }
+        else if (requestCode == PICK_IMAGE_2) {
+            setImage(data, 2);
+            car3.setVisibility(View.VISIBLE);
+        }
+        else if (requestCode == PICK_IMAGE_3) {
+            setImage(data, 3);
+            car4.setVisibility(View.VISIBLE);
+        }
+        else if (requestCode == PICK_IMAGE_4) {
+            setImage(data, 4);
+            car5.setVisibility(View.VISIBLE);
+        }
+        else if (requestCode == PICK_IMAGE_5) {
+            setImage(data, 5);
         }
     }
     private String encodeImage(Bitmap bm)
@@ -360,7 +469,7 @@ public class ActivityAddCar extends AppCompatActivity {
 
             String imgURI= "https://gaarihazir.com/car-images/"+modelMyCar.getImage();
             Glide.with(context).load( imgURI) // Uri of the picture
-                    .into(binding.imgCar);
+                    .into(car1);
 
         }
         if(modelMyCar.getCar_status().equals("Available")) binding.switchIsAvailable.setChecked(true);
@@ -408,20 +517,8 @@ public class ActivityAddCar extends AppCompatActivity {
         });
 
 
-
-
-
-
-
     }
     public void init(){
-
-
-
-
-
-
-
 
         listMilage.add("8 KM/L");
         listMilage.add("9 KM/L");
@@ -711,25 +808,20 @@ public class ActivityAddCar extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(context);
 
         StringRequest myReq = new StringRequest(Request.Method.POST,
-                "https://gaarihazir.com/api/storeCar",
+                BASE_API+"storeCar",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
-
                         try {
                             //Toast.makeText(context, "debug 1", Toast.LENGTH_SHORT).show();
                             JSONObject objRes = new JSONObject(response);
 
                             JSONObject objData= objRes.getJSONObject("data");
 
-
-
                             loading.end();
                             Toast.makeText(context, "Car Added Successfully!", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(context,MainActivity.class));
                             finish();
-
 
                         } catch (JSONException e) {
                             loading.end();
@@ -781,7 +873,11 @@ public class ActivityAddCar extends AppCompatActivity {
                 params.put("car_tranmission", binding.spinerCarTransmission.getSelectedItem().toString());
                 params.put("car_rent", binding.etCarRent.getText().toString());
                 params.put("car_type", binding.spinerCarType.getSelectedItem().toString());
-                params.put("image", encodeImage(((BitmapDrawable)binding.imgCar.getDrawable()).getBitmap()));
+                params.put("image", encodeImage(((BitmapDrawable)car1.getDrawable()).getBitmap()));
+                params.put("image2", encodeImage(((BitmapDrawable)car2.getDrawable()).getBitmap()));
+                params.put("image3", encodeImage(((BitmapDrawable)car3.getDrawable()).getBitmap()));
+                params.put("image4", encodeImage(((BitmapDrawable)car4.getDrawable()).getBitmap()));
+                params.put("image5", encodeImage(((BitmapDrawable)car5.getDrawable()).getBitmap()));
 
                 String availability="Booked";
                 if(binding.switchIsAvailable.isChecked())availability="Available";
@@ -803,7 +899,7 @@ public class ActivityAddCar extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(context);
 
         StringRequest myReq = new StringRequest(Request.Method.POST,
-                "https://gaarihazir.com/api/carupdate/"+id,
+                BASE_API+"carupdate/"+id,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -848,7 +944,7 @@ public class ActivityAddCar extends AppCompatActivity {
 
 
 
-               // Map<String, String> paramss = new HashMap<String, String>();
+                // Map<String, String> paramss = new HashMap<String, String>();
 
 
 
@@ -874,7 +970,7 @@ public class ActivityAddCar extends AppCompatActivity {
                 params.put("car_tranmission", binding.spinerCarTransmission.getSelectedItem().toString());
                 params.put("car_rent", binding.etCarRent.getText().toString());
                 params.put("car_type", binding.spinerCarType.getSelectedItem().toString());
-                params.put("image", encodeImage(((BitmapDrawable)binding.imgCar.getDrawable()).getBitmap()));
+                params.put("image", encodeImage(((BitmapDrawable)car1.getDrawable()).getBitmap()));
                 String availability="Booked";
                 if(binding.switchIsAvailable.isChecked())availability="Available";
                 params.put("car_status", availability);
@@ -885,7 +981,7 @@ public class ActivityAddCar extends AppCompatActivity {
         };
         requestQueue.add(myReq);
 
-        //Toast.makeText(ActivityAddCar.this, ""+encodeImage(((BitmapDrawable)binding.imgCar.getDrawable()).getBitmap()), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(ActivityAddCar.this, ""+encodeImage(((BitmapDrawable)car1.getDrawable()).getBitmap()), Toast.LENGTH_SHORT).show();
 
     }
 

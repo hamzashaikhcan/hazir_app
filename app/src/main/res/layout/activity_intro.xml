@@ -4,23 +4,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#241e20"
+    android:background="#fff"
     tools:context=".app.IntroActivity">
 
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/introone"></ImageView>
+        android:src="@drawable/zeroone"></ImageView>
 
-    <Button
-        android:id="@+id/introone_next"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Next"
-        android:background="#1B1416"
-        android:textColor="#fff"
-        android:layout_gravity="bottom"
-        />
+        android:orientation="horizontal"
+        android:layout_gravity="bottom">
+        <Button
+            android:id="@+id/introone_next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            android:layout_weight="1"
+            android:background="#1B1416"
+            android:textColor="#fff"
+            />
+        <Button
+            android:id="@+id/skip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Skip"
+            android:layout_weight="1"
+            android:background="#cb7246"
+            android:textColor="#fff"
+            />
+    </LinearLayout>
 
 </FrameLayout>

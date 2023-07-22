@@ -13,10 +13,13 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,12 +33,17 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.enfotrix.hazir.Adapters.AdapterMyCar;
+import com.enfotrix.hazir.Constant;
 import com.enfotrix.hazir.Loading;
 import com.enfotrix.hazir.Models.ModelMyCar;
 import com.enfotrix.hazir.R;
 import com.enfotrix.hazir.Utils;
 import com.enfotrix.hazir.app.ActivityAddCar;
 import com.enfotrix.hazir.databinding.FragmentDashboardBinding;
+import com.github.ybq.android.spinkit.SpinKitView;
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.Circle;
+import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import org.json.JSONArray;
@@ -55,6 +63,10 @@ public class DashboardFragment extends Fragment {
     private FragmentDashboardBinding binding;
     private Utils utils;
 
+    String BASE_API = new Constant().getBaseURL();
+
+    SpinKitView spinKitView;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -62,8 +74,13 @@ public class DashboardFragment extends Fragment {
                 new ViewModelProvider(this).get(DashboardViewModel.class);
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        spinKitView = root.findViewById(R.id.spin_kit);
+        Sprite circle = new Circle();
+        spinKitView.setIndeterminateDrawable(circle);
         context= getContext();
         utils= new Utils(context);
+
+
         listModelMyCar = new ArrayList<>();
         binding.rvMyCar.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
         carList();
@@ -90,8 +107,6 @@ public class DashboardFragment extends Fragment {
         binding = null;
     }
 
-
-
     private void showBottomSheetDialog(ModelMyCar car ) {
 
             final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
@@ -108,7 +123,24 @@ public class DashboardFragment extends Fragment {
             TextView tvCarSeat=bottomSheetDialog.findViewById(R.id.tvCarSeat);
             TextView tvCarDisc=bottomSheetDialog.findViewById(R.id.tvCarDisc);
             ImageView imgCancel=bottomSheetDialog.findViewById(R.id.imgCancel);
+
             ImageView imgCarPhoto=bottomSheetDialog.findViewById(R.id.imgCarPhoto);
+            ImageView imgCarPhoto2=bottomSheetDialog.findViewById(R.id.imgCarPhoto2);
+            ImageView imgCarPhoto3=bottomSheetDialog.findViewById(R.id.imgCarPhoto3);
+            ImageView imgCarPhoto4=bottomSheetDialog.findViewById(R.id.imgCarPhoto4);
+            ImageView imgCarPhoto5=bottomSheetDialog.findViewById(R.id.imgCarPhoto5);
+
+            CardView c2 = bottomSheetDialog.findViewById(R.id.card2);
+            CardView c3 = bottomSheetDialog.findViewById(R.id.card3);
+            CardView c4 = bottomSheetDialog.findViewById(R.id.card4);
+            CardView c5 = bottomSheetDialog.findViewById(R.id.card5);
+
+
+            c2.setVisibility(View.GONE);
+            c3.setVisibility(View.GONE);
+            c4.setVisibility(View.GONE);
+            c5.setVisibility(View.GONE);
+
             Button btnBooking=bottomSheetDialog.findViewById(R.id.btnBooking);
             TextView tvCarNo=bottomSheetDialog.findViewById(R.id.tvCarNo);
             tvCarName.setText(car.getCar_make());
@@ -129,6 +161,30 @@ public class DashboardFragment extends Fragment {
                 Glide.with(context).load( imgURI) // Uri of the picture
                         .into(imgCarPhoto);
             }
+        if((!car.getImage2().isEmpty()) || car.getImage2()!=null){
+            String imgURI= "https://gaarihazir.com/car-images/"+car.getImage2();
+            Glide.with(context).load( imgURI) // Uri of the picture
+                    .into(imgCarPhoto2);
+            c2.setVisibility(View.VISIBLE);
+        }
+        if((!car.getImage3().isEmpty()) || car.getImage3()!=null){
+            String imgURI= "https://gaarihazir.com/car-images/"+car.getImage3();
+            Glide.with(context).load( imgURI) // Uri of the picture
+                    .into(imgCarPhoto3);
+            c3.setVisibility(View.VISIBLE);
+        }
+        if((!car.getImage4().isEmpty()) || car.getImage4()!=null){
+            String imgURI= "https://gaarihazir.com/car-images/"+car.getImage4();
+            Glide.with(context).load( imgURI) // Uri of the picture
+                    .into(imgCarPhoto4);
+            c4.setVisibility(View.VISIBLE);
+        }
+        if((!car.getImage5().isEmpty()) || car.getImage5()!=null){
+            String imgURI= "https://gaarihazir.com/car-images/"+car.getImage5();
+            Glide.with(context).load( imgURI) // Uri of the picture
+                    .into(imgCarPhoto5);
+            c5.setVisibility(View.VISIBLE);
+        }
 
 
 
@@ -158,9 +214,6 @@ public class DashboardFragment extends Fragment {
 
         bottomSheetDialog.show();
     }
-
-
-
 
     private void deleteDialog(int carID,int position){
 
@@ -197,7 +250,7 @@ public class DashboardFragment extends Fragment {
         loading.start();
         requestQueue = Volley.newRequestQueue(context);
 
-        String url="https://gaarihazir.com/api/deletecar/"+carID;
+        String url=BASE_API+"deletecar/"+carID;
 
         StringRequest myReq= new StringRequest(url, new Response.Listener<String>() {
             @Override
@@ -205,7 +258,8 @@ public class DashboardFragment extends Fragment {
 
 
                 try {
-                        loading.end();
+//                        loading.end();
+                    spinKitView.setVisibility(View.GONE);
                         JSONObject obj = new JSONObject(response);
                         dialog.dismiss();
                         adapterMyCar.notifyItemRemoved(position);
@@ -225,7 +279,8 @@ public class DashboardFragment extends Fragment {
 
 
                 } catch (JSONException e) {
-                    loading.end();
+//                    loading.end();
+                    spinKitView.setVisibility(View.GONE);
 
                     throw new RuntimeException(e);
                 }
@@ -236,7 +291,8 @@ public class DashboardFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        loading.end();
+//                        loading.end();
+                        spinKitView.setVisibility(View.GONE);
 
                         //Toast.makeText(context, error.getMessage()+"", Toast.LENGTH_SHORT).show();
                     }
@@ -300,11 +356,12 @@ public class DashboardFragment extends Fragment {
 
 
 
-        Loading loading= new Loading(context);
-        loading.start();
+//        Loading loading= new Loading(context);
+//        loading.start();
+        spinKitView.setVisibility(View.VISIBLE);
         requestQueue = Volley.newRequestQueue(context);
 
-        JsonArrayRequest myReq = new JsonArrayRequest("https://gaarihazir.com/api/drivercars/"+utils.getToken(),
+        JsonArrayRequest myReq = new JsonArrayRequest(BASE_API+"drivercars/"+utils.getToken(),
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
@@ -340,7 +397,11 @@ public class DashboardFragment extends Fragment {
                                         JSONModelCar.getString("car_status"),// availability);
                                         JSONModelCar.getString("state"),// binding.spinerCarStateAvail.getSelectedItem().toString());
                                         JSONModelCar.getString("car_tranmission"),
-                                        JSONModelCar.getString("image")
+                                        JSONModelCar.getString("image"),
+                                        JSONModelCar.getString("image2"),
+                                        JSONModelCar.getString("image3"),
+                                        JSONModelCar.getString("image4"),
+                                        JSONModelCar.getString("image5")
                                 );
 
                                 if(modelMyCar!=null) listModelMyCar.add(modelMyCar);
@@ -350,8 +411,9 @@ public class DashboardFragment extends Fragment {
 
                             }
 
-                            loading.end();
+//                            loading.end();
 
+                            spinKitView.setVisibility(View.GONE);
                             adapterMyCar = new AdapterMyCar(getContext(),listModelMyCar);
 
                             adapterMyCar.setOnAdapterIntractionListner(new AdapterMyCar.OnAdapterIntractionListner() {
@@ -402,12 +464,12 @@ public class DashboardFragment extends Fragment {
 
                             binding.rvMyCar.setAdapter(adapterMyCar);
                             adapterMyCar.notifyDataSetChanged();
-                            loading.end();
-
+//                            loading.end();
+                            spinKitView.setVisibility(View.GONE);
                         }
                         catch (Exception ex){
-                            loading.end();
-
+//                            loading.end();
+                            spinKitView.setVisibility(View.GONE);
                            // Toast.makeText(context, ex+"", Toast.LENGTH_SHORT).show();
                         }
 
@@ -418,8 +480,8 @@ public class DashboardFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-                        loading.end();
-
+//                        loading.end();
+                        spinKitView.setVisibility(View.GONE);
                        // Toast.makeText(context, error+"", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -537,21 +599,6 @@ public class DashboardFragment extends Fragment {
 
         requestQueue.add(request);*/
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
 
@@ -565,7 +612,7 @@ public class DashboardFragment extends Fragment {
         loading.start();
         requestQueue = Volley.newRequestQueue(context);
 
-        String url="https://gaarihazir.com/api/carstatus/"+modelMyCar.getId()+"/"+modelMyCar.getCar_status();
+        String url=BASE_API+"carstatus/"+modelMyCar.getId()+"/"+modelMyCar.getCar_status();
 
         StringRequest myReq= new StringRequest(url, new Response.Listener<String>() {
             @Override
@@ -573,7 +620,8 @@ public class DashboardFragment extends Fragment {
 
 
                 try {
-                    loading.end();
+//                    loading.end();
+                    spinKitView.setVisibility(View.GONE);
                     JSONObject obj = new JSONObject(response);
                     JSONObject car= obj.getJSONObject("car");
                     boolean update= obj.getBoolean("message");
@@ -592,8 +640,8 @@ public class DashboardFragment extends Fragment {
 
 
                 } catch (JSONException e) {
-                    loading.end();
-
+//                    loading.end();
+                    spinKitView.setVisibility(View.GONE);
                     throw new RuntimeException(e);
                 }
 
@@ -603,8 +651,8 @@ public class DashboardFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        loading.end();
-
+//                        loading.end();
+                        spinKitView.setVisibility(View.GONE);
                         Toast.makeText(context, error.getMessage()+"", Toast.LENGTH_SHORT).show();
                     }
                 });

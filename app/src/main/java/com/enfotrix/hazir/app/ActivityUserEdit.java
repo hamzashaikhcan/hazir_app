@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.enfotrix.hazir.Constant;
 import com.enfotrix.hazir.Loading;
 import com.enfotrix.hazir.MainActivity;
 import com.enfotrix.hazir.R;
@@ -46,6 +47,8 @@ public class ActivityUserEdit extends AppCompatActivity {
     Context context;
     ActivityUserEditBinding binding;
     RequestQueue requestQueue;
+
+    String BASE_API = new Constant().getBaseURL();
 
     String encodedImageCnicFront,encodedImageCnicBack,encodedImageLicFront,encodedImageLicBack,encodedImageProfile;
 
@@ -126,7 +129,7 @@ public class ActivityUserEdit extends AppCompatActivity {
         loading.start();
         requestQueue = Volley.newRequestQueue(context);
         StringRequest myReq = new StringRequest(Request.Method.GET,
-                "https://gaarihazir.com/api/getuserdetails/"+utils.getToken(),
+                BASE_API+"getuserdetails/"+utils.getToken(),
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -296,7 +299,7 @@ public class ActivityUserEdit extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this);
 
         StringRequest myReq = new StringRequest(Request.Method.POST,
-                "https://gaarihazir.com/api/driverupdate",
+                BASE_API+"driverupdate",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

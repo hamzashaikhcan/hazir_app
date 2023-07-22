@@ -26,9 +26,7 @@
                     android:layout_centerVertical="true"
                     android:src="@drawable/close"
                     android:layout_marginRight="20dp"
-                    android:layout_alignParentRight="true">
-
-                </ImageView>
+                    android:layout_alignParentRight="true"/>
 
 
                 <LinearLayout
@@ -59,21 +57,105 @@
 
             </RelativeLayout>
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="180dp"
-                app:cardCornerRadius="16dp"
-                android:layout_margin="10dp"
 
-                app:cardElevation="6dp">
 
-                <ImageView
-                    android:id="@+id/imgCarPhoto"
+                <HorizontalScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/car_sample"/>
+                    android:layout_height="200dp"
+                    android:fillViewport="true"
+                    android:measureAllChildren="false"
+                    android:scrollbars="none">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        app:cardCornerRadius="16dp"
+                        android:layout_weight="1"
+                        android:layout_margin="10dp"
+                        app:cardElevation="6dp">
 
-            </androidx.cardview.widget.CardView>
+                        <ImageView
+                            android:id="@+id/imgCarPhoto"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/car_sample"/>
+
+                    </androidx.cardview.widget.CardView>
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        app:cardCornerRadius="16dp"
+                        android:layout_weight="1"
+                        android:layout_margin="10dp"
+                        app:cardElevation="6dp">
+
+                        <ImageView
+                            android:id="@+id/imgCarPhoto2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/car_sample"/>
+
+                    </androidx.cardview.widget.CardView>
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        app:cardCornerRadius="16dp"
+                        android:layout_weight="1"
+                        android:layout_margin="10dp"
+                        app:cardElevation="6dp">
+
+                        <ImageView
+                            android:id="@+id/imgCarPhoto3"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/car_sample"/>
+
+                    </androidx.cardview.widget.CardView>
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        app:cardCornerRadius="16dp"
+                        android:layout_weight="1"
+                        android:layout_margin="10dp"
+                        app:cardElevation="6dp">
+
+                        <ImageView
+                            android:id="@+id/imgCarPhoto4"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/car_sample"/>
+
+                    </androidx.cardview.widget.CardView>
+                    <androidx.cardview.widget.CardView
+                            android:id="@+id/card5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:visibility="gone"
+                            app:cardCornerRadius="16dp"
+                            android:layout_weight="1"
+                            android:layout_margin="10dp"
+                            app:cardElevation="6dp">
+
+                            <ImageView
+                                android:id="@+id/imgCarPhoto5"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/car_sample"/>
+
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+
 
             <RelativeLayout
                 android:layout_width="match_parent"

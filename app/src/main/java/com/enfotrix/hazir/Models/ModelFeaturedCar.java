@@ -10,16 +10,51 @@ import java.util.Map;
 
 public class ModelFeaturedCar extends JSONObject {
     int id;
-    String driver_id, car_model, car_make, model_year, car_assembly,  engine_capacity, body_color, between_cities, registration_city, pickup_city, car_no,
-            driver_availability, car_mileage, car_rent, description, insured, car_seats, car_type, car_status,  state,car_tranmission;
+    String driver_id,
+            car_model,
+            car_make,
+            model_year, car_assembly,  engine_capacity, body_color, between_cities, registration_city, pickup_city, car_no,
+            driver_availability, car_mileage, car_rent, description, insured, car_seats, car_type, car_status,  state, car_tranmission;
 
-    String image;
+    String image, image2, image3, image4, image5;
     String phone_no;
 
 
+    public String getImage2() {
+        return image2;
+    }
+
+    public void setImage2(String image2) {
+        this.image2 = image2;
+    }
+
+    public String getImage3() {
+        return image3;
+    }
+
+    public void setImage3(String image3) {
+        this.image3 = image3;
+    }
+
+    public String getImage4() {
+        return image4;
+    }
+
+    public void setImage4(String image4) {
+        this.image4 = image4;
+    }
+
+    public String getImage5() {
+        return image5;
+    }
+
+    public void setImage5(String image5) {
+        this.image5 = image5;
+    }
+
     public ModelFeaturedCar(int id, String driver_id, String car_model, String car_make, String model_year, String car_assembly, String engine_capacity, String body_color,
                             String between_cities, String registration_city, String pickup_city, String car_no, String driver_availability, String car_mileage, String car_rent,
-                            String description, String insured, String car_seats, String car_type, String car_status, String state, String car_tranmission, String image, String phone_no) {
+                            String description, String insured, String car_seats, String car_type, String car_status, String state, String car_tranmission, String image, String image2, String image3, String image4, String image5, String phone_no) {
         this.id = id;
         this.driver_id = driver_id;
         this.car_model = car_model;
@@ -43,6 +78,10 @@ public class ModelFeaturedCar extends JSONObject {
         this.state = state;
         this.car_tranmission = car_tranmission;
         this.image = image;
+        this.image2 = image2;
+        this.image3 = image3;
+        this.image4 = image4;
+        this.image5 = image5;
         this.phone_no = phone_no;
     }
 

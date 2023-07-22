@@ -17,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.enfotrix.hazir.Constant;
 import com.enfotrix.hazir.Loading;
 import com.enfotrix.hazir.MainActivity;
 import com.enfotrix.hazir.R;
@@ -38,6 +39,8 @@ public class ActivitySignIn extends AppCompatActivity {
     ActivitySignInBinding binding;
     RequestQueue requestQueue;
     Utils utils;
+
+    String BASE_API = new Constant().getBaseURL();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +95,7 @@ public class ActivitySignIn extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this);
 
         StringRequest myReq = new StringRequest(Request.Method.POST,
-                "https://gaarihazir.com/api/driver/login",
+                BASE_API+"driver/login",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

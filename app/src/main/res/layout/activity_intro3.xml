@@ -4,20 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#241e20"
+    android:background="#fff"
     tools:context=".app.Intro3Activity">
 
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/introthree"></ImageView>
+        android:paddingBottom="25dp"
+        android:src="@drawable/zerothree"></ImageView>
 
     <Button
         android:id="@+id/introthree_next"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Next"
+        android:text="Finish"
         android:background="#1B1416"
         android:textColor="#fff"
         android:layout_gravity="bottom"

@@ -1,14 +1,9 @@
 package com.enfotrix.hazir;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Window;
-import android.widget.TextView;
-
-import androidx.core.content.ContextCompat;
 
 public class Loading {
 

@@ -20,13 +20,86 @@
             android:textColor="@color/black"
             android:textSize="18dp"
             android:layout_gravity="center_horizontal"/>
-        <ImageView
-            android:id="@+id/imgCar"
-            android:layout_width="170dp"
-            android:layout_height="120dp"
-            android:layout_gravity="center_horizontal"
-            android:scaleType="fitXY"
-            android:src="@drawable/car_sample"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imgCar1"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="fitXY"
+                android:layout_weight="1"
+                android:src="@drawable/add_image"/>
+
+            <ImageView
+                android:id="@+id/imgCar2"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="fitXY"
+                android:layout_weight="1"
+                android:visibility="invisible"
+                android:src="@drawable/add_image"/>
+
+            <ImageView
+                android:id="@+id/imgCar3"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="fitXY"
+                android:layout_weight="1"
+                android:visibility="invisible"
+                android:src="@drawable/add_image"/>
+
+            <ImageView
+                android:id="@+id/imgCar4"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="fitXY"
+                android:layout_weight="1"
+                android:visibility="invisible"
+                android:src="@drawable/add_image"/>
+
+            <ImageView
+                android:id="@+id/imgCar5"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="fitXY"
+                android:visibility="invisible"
+                android:layout_weight="1"
+                android:src="@drawable/add_image"/>
+
+        </LinearLayout>
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/imgCar4"-->
+<!--                android:layout_width="80dp"-->
+<!--                android:layout_height="80dp"-->
+<!--                android:layout_gravity="center_horizontal"-->
+<!--                android:scaleType="fitXY"-->
+<!--                android:layout_weight="1"-->
+<!--                android:src="@drawable/add_image"/>-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/imgCar5"-->
+<!--                android:layout_width="80dp"-->
+<!--                android:layout_height="80dp"-->
+<!--                android:layout_gravity="center_horizontal"-->
+<!--                android:scaleType="fitXY"-->
+<!--                android:layout_weight="1"-->
+<!--                android:src="@drawable/add_image"/>-->
+
+<!--        </LinearLayout>-->
         <Button
             android:id="@+id/btnUpload"
             android:layout_width="wrap_content"

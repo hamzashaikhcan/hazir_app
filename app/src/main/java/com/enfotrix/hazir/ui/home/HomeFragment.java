@@ -1,11 +1,15 @@
 package com.enfotrix.hazir.ui.home;
 
 import android.app.Dialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.telephony.PhoneNumberUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,11 +18,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -33,6 +40,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.enfotrix.hazir.Adapters.AdapterCarAd;
 import com.enfotrix.hazir.Adapters.AdapterFeaturedCar;
+import com.enfotrix.hazir.Constant;
 import com.enfotrix.hazir.Loading;
 import com.enfotrix.hazir.Models.ModelCarAd;
 import com.enfotrix.hazir.Models.ModelFeaturedCar;
@@ -42,6 +50,9 @@ import com.enfotrix.hazir.app.ActivityCarCtg;
 import com.enfotrix.hazir.app.ActivitySearch;
 import com.enfotrix.hazir.app.ActivitySignIn;
 import com.enfotrix.hazir.databinding.FragmentHomeBinding;
+import com.github.ybq.android.spinkit.SpinKitView;
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.Circle;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import org.json.JSONArray;
@@ -64,12 +75,20 @@ public class HomeFragment extends Fragment   {
     String ctg="Sedan";
     Utils utils;
 
+    String BASE_API = new Constant().getBaseURL();
+
+    SpinKitView spinKitView;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        spinKitView = root.findViewById(R.id.spin_kit);
+        Sprite circle = new Circle();
+        spinKitView.setIndeterminateDrawable(circle);
 
         context= getContext();
         utils= new Utils(context);
@@ -160,8 +179,6 @@ public class HomeFragment extends Fragment   {
             }
         });
 
-
-
         setCarAd();
         setFeaturedCar();
 
@@ -249,10 +266,28 @@ public class HomeFragment extends Fragment   {
         TextView tvCarType=bottomSheetDialog.findViewById(R.id.tvCarType);
         TextView tvCarSeat=bottomSheetDialog.findViewById(R.id.tvCarSeat);
         TextView tvCarDisc=bottomSheetDialog.findViewById(R.id.tvCarDisc);
+
+        CardView c2 = bottomSheetDialog.findViewById(R.id.card2);
+        CardView c3 = bottomSheetDialog.findViewById(R.id.card3);
+        CardView c4 = bottomSheetDialog.findViewById(R.id.card4);
+        CardView c5 = bottomSheetDialog.findViewById(R.id.card5);
+
         ImageView imgCancel=bottomSheetDialog.findViewById(R.id.imgCancel);
+
         ImageView imgCarPhoto=bottomSheetDialog.findViewById(R.id.imgCarPhoto);
+        ImageView imgCarPhoto2=bottomSheetDialog.findViewById(R.id.imgCarPhoto2);
+        ImageView imgCarPhoto3=bottomSheetDialog.findViewById(R.id.imgCarPhoto3);
+        ImageView imgCarPhoto4=bottomSheetDialog.findViewById(R.id.imgCarPhoto4);
+        ImageView imgCarPhoto5=bottomSheetDialog.findViewById(R.id.imgCarPhoto5);
+
+        c2.setVisibility(View.GONE);
+        c3.setVisibility(View.GONE);
+        c4.setVisibility(View.GONE);
+        c5.setVisibility(View.GONE);
+
         Button btnBooking=bottomSheetDialog.findViewById(R.id.btnBooking);
         TextView tvCarNo=bottomSheetDialog.findViewById(R.id.tvCarNo);
+
         tvCarName.setText(car.getCar_make());
         tvCarModel.setText(car.getCar_model()+"-"+car.getModel_year());
         tvCity.setText(car.getPickup_city());
@@ -266,12 +301,37 @@ public class HomeFragment extends Fragment   {
         tvCarNo.setText(car.getCar_no());
         tvCarDisc.setText(car.getDescription());
 
+
         if((!car.getImage().isEmpty()) || car.getImage()!=null){
             String imgURI= "https://gaarihazir.com/car-images/"+car.getImage();
             Glide.with(context).load( imgURI) // Uri of the picture
                     .into(imgCarPhoto);
         }
+        if((!car.getImage2().isEmpty()) || car.getImage2()!=null){
+            String imgURI= "https://gaarihazir.com/car-images/"+car.getImage2();
+            Glide.with(context).load( imgURI) // Uri of the picture
+                    .into(imgCarPhoto2);
+            c2.setVisibility(View.VISIBLE);
+        }
+        if((!car.getImage3().isEmpty()) || car.getImage3()!=null){
+            String imgURI= "https://gaarihazir.com/car-images/"+car.getImage3();
+            Glide.with(context).load( imgURI) // Uri of the picture
+                    .into(imgCarPhoto3);
+            c3.setVisibility(View.VISIBLE);
+        }
+        if((!car.getImage4().isEmpty()) || car.getImage4()!=null){
+            String imgURI= "https://gaarihazir.com/car-images/"+car.getImage4();
+            Glide.with(context).load( imgURI) // Uri of the picture
+                    .into(imgCarPhoto4);
+            c4.setVisibility(View.VISIBLE);
 
+        }
+        if((!car.getImage5().isEmpty()) || car.getImage5()!=null){
+            String imgURI= "https://gaarihazir.com/car-images/"+car.getImage5();
+            Glide.with(context).load( imgURI) // Uri of the picture
+                    .into(imgCarPhoto5);
+            c5.setVisibility(View.VISIBLE);
+        }
 
 
         btnBooking.setOnClickListener(new View.OnClickListener() {
@@ -298,6 +358,18 @@ public class HomeFragment extends Fragment   {
         bottomSheetDialog.show();
     }
 
+
+    public boolean valiateContact (EditText fuel, EditText days) {
+        if(fuel.getText().toString().trim().isEmpty()){
+            fuel.setError("Please enter Fuel");
+            return false;
+        }
+        if(days.getText().toString().trim().isEmpty()){
+            days.setError("Please enter total number of days");
+            return false;
+        }
+        return true;
+    }
     private void  contactDialog(String WA, String Call,String Msg){
 
         final Dialog dialog = new Dialog(context);
@@ -312,11 +384,24 @@ public class HomeFragment extends Fragment   {
         LinearLayout layCall = (LinearLayout) dialog.findViewById(R.id.layCall);
         ImageView imgClose = (ImageView) dialog.findViewById(R.id.imgClose);
 
+        EditText fuel = dialog.findViewById(R.id.fuel);
+        EditText days = dialog.findViewById(R.id.days);
+
+        String sms_message;
+
+        if(valiateContact(fuel, days)){
+            Msg = Msg+"\nFuel: "+fuel.getText().toString().trim()+"\nTotal Days: "+days.getText().toString().trim();
+        }
+
+        sms_message  = "I need booking with following details \nFuel: "+fuel.getText().toString().trim()+"\nTotal Days: "+days.getText().toString().trim();
+
+        String finalMsg = Msg;
         layMsg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-                sendIntent.setData(Uri.parse("sms:"+Msg));
+                sendIntent.setData(Uri.parse("sms:"+ finalMsg));
+                sendIntent.putExtra(Intent.EXTRA_TEXT, sms_message);
                 startActivity(sendIntent);
 
             }
@@ -325,10 +410,32 @@ public class HomeFragment extends Fragment   {
         layWA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri uri = Uri.parse("smsto:" + WA);
-                Intent i = new Intent(Intent.ACTION_SENDTO, uri);
-                i.setPackage("com.whatsapp");
-                startActivity(Intent.createChooser(i, ""));
+                String number = "923058222281";
+                Uri uri = Uri.parse("+923058222281");
+                PackageManager pm= getActivity().getPackageManager();
+//                Intent i = new Intent(Intent.ACTION_SENDTO, uri);
+
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_VIEW);
+                String url = "https://api.whatsapp.com/send?phone=" + number + "&text=" + sms_message;
+                sendIntent.setData(Uri.parse(url));
+                startActivity(sendIntent);
+//                Intent i
+//                        = new Intent(
+//                        Intent.ACTION_SENDTO, uri);
+//                i.putExtra(Intent.EXTRA_TEXT, message);
+//                i.setType("text/plain");
+//                i.setPackage("com.whatsapp");
+
+//                i.putExtra(Intent.EXTRA_TEXT, message);
+//                i.setPackage("com.whatsapp");
+//                startActivity(Intent.createChooser(i, ""));
+//                if (i.resolveActivity(getActivity().getPackageManager())
+//                        == null) {
+//                    Toast.makeText(getContext(),"Please install whatsapp first.", Toast.LENGTH_SHORT).show();
+//                }
+//                startActivity(i);
+
             }
         });
 
@@ -368,17 +475,17 @@ public class HomeFragment extends Fragment   {
     public void setFeaturedCar(){
 
         adapterFeaturedCar = new AdapterFeaturedCar();
-        Loading loading= new Loading(context);
-        loading.start();
+//        Loading loading= new Loading(context);
+//        loading.start();
         requestQueue = Volley.newRequestQueue(context);
-        JsonArrayRequest request= new JsonArrayRequest("https://gaarihazir.com/api/allcars", new Response.Listener<JSONArray>() {
+        JsonArrayRequest request= new JsonArrayRequest(BASE_API+"allcars", new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
 
 
                 try {
-                    loading.end();
-
+//                    loading.end();
+                    spinKitView.setVisibility(View.GONE);
 
                     for(int i =0; i<response.length();i++){
 
@@ -409,6 +516,10 @@ public class HomeFragment extends Fragment   {
                                 JSONModelCar.getString("state"),// binding.spinerCarStateAvail.getSelectedItem().toString());
                                 JSONModelCar.getString("car_tranmission"),
                                 JSONModelCar.getString("image"),
+                                JSONModelCar.getString("image2"),
+                                JSONModelCar.getString("image3"),
+                                JSONModelCar.getString("image4"),
+                                JSONModelCar.getString("image5"),
                                 JSONDriver.getString("phone_no")
 
                         );
@@ -436,8 +547,8 @@ public class HomeFragment extends Fragment   {
 
                     binding.rvFCar.setAdapter(adapterFeaturedCar);
                     adapterFeaturedCar.notifyDataSetChanged();
-                    loading.end();
-
+//                    loading.end();
+                    spinKitView.setVisibility(View.GONE);
                 }
                 catch (Exception ex){
                    // Toast.makeText(context, ex+"", Toast.LENGTH_SHORT).show();
@@ -449,7 +560,9 @@ public class HomeFragment extends Fragment   {
                     public void onErrorResponse(VolleyError error) {
 
                       //  Toast.makeText(context, error+"", Toast.LENGTH_SHORT).show();
-                        loading.end();
+//                        loading.end();
+                        spinKitView.setVisibility(View.GONE);
+
                     }
                 }
         )

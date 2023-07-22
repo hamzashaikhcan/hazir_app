@@ -26,6 +26,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.enfotrix.hazir.Adapters.AdapterCarSearch;
 import com.enfotrix.hazir.Adapters.AdapterFeaturedCar;
+import com.enfotrix.hazir.Constant;
 import com.enfotrix.hazir.Loading;
 import com.enfotrix.hazir.Models.ModelCarSearch;
 import com.enfotrix.hazir.Models.ModelFeaturedCar;
@@ -51,6 +52,8 @@ public class ActivityCarCtg extends AppCompatActivity {
     private RequestQueue requestQueue;
 
     Utils utils;
+
+    String BASE_API = new Constant().getBaseURL();
 
     ActivityCarCtgBinding binding;
     @Override
@@ -219,7 +222,7 @@ public class ActivityCarCtg extends AppCompatActivity {
         Loading loading= new Loading(context);
         loading.start();
         requestQueue = Volley.newRequestQueue(context);
-        JsonArrayRequest request= new JsonArrayRequest("https://gaarihazir.com/api/allcars", new Response.Listener<JSONArray>() {
+        JsonArrayRequest request= new JsonArrayRequest(BASE_API+"allcars", new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
 
@@ -308,7 +311,7 @@ public class ActivityCarCtg extends AppCompatActivity {
         Loading loading= new Loading(context);
         loading.start();
         requestQueue = Volley.newRequestQueue(context);
-        JsonArrayRequest request= new JsonArrayRequest("https://gaarihazir.com/api/allcars", new Response.Listener<JSONArray>() {
+        JsonArrayRequest request= new JsonArrayRequest(BASE_API+"allcars", new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
 

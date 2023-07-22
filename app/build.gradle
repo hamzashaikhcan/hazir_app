@@ -52,6 +52,8 @@ dependencies {
 
 //    implementation 'com.github.yash786agg:AnimatedLoadingIndicator:v1.3'
 
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
+
     implementation 'com.android.volley:volley:1.2.1'
 
 }

@@ -28,6 +28,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.enfotrix.hazir.Adapters.AdapterMyCar;
+import com.enfotrix.hazir.Constant;
 import com.enfotrix.hazir.Loading;
 import com.enfotrix.hazir.MainActivity;
 import com.enfotrix.hazir.Models.ModelCarAd;
@@ -38,6 +39,9 @@ import com.enfotrix.hazir.app.ActivityAddCar;
 import com.enfotrix.hazir.app.ActivitySignIn;
 import com.enfotrix.hazir.app.ActivityUserEdit;
 import com.enfotrix.hazir.databinding.FragmentNotificationsBinding;
+import com.github.ybq.android.spinkit.SpinKitView;
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.Circle;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,6 +63,9 @@ public class NotificationsFragment extends Fragment {
     int countAllCar, countAvailCar;
     private FragmentNotificationsBinding binding;
 
+    String BASE_API = new Constant().getBaseURL();
+    SpinKitView spinKitView;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         NotificationsViewModel notificationsViewModel =
@@ -66,6 +73,10 @@ public class NotificationsFragment extends Fragment {
 
         binding = FragmentNotificationsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        spinKitView = root.findViewById(R.id.spin_kit);
+        Sprite circle = new Circle();
+        spinKitView.setIndeterminateDrawable(circle);
 
         countAllCar=0;
         countAvailCar=0;
@@ -197,11 +208,11 @@ public class NotificationsFragment extends Fragment {
 
 
 
-        Loading loading= new Loading(context);
-        loading.start();
+//        Loading loading= new Loading(context);
+//        loading.start();
         requestQueue = Volley.newRequestQueue(context);
         StringRequest myReq = new StringRequest(Request.Method.GET,
-                "https://gaarihazir.com/api/getuserdetails/"+utils.getToken(),
+                BASE_API+"getuserdetails/"+utils.getToken(),
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -216,13 +227,14 @@ public class NotificationsFragment extends Fragment {
                             String imgURI= "https://gaarihazir.com/driver-profile/"+obj.getString("profile_photo");
                             Glide.with(context).load( imgURI).into(binding.imgUserPhoto);
 
-                            loading.end();
+//                            loading.end();
 
+                            spinKitView.setVisibility(View.GONE);
                             //Toast.makeText(context, obj.getString("message")+"", Toast.LENGTH_SHORT).show();
 
                         } catch (JSONException e) {
-                            loading.end();
-
+//                            loading.end();
+                            spinKitView.setVisibility(View.GONE);
                             //throw new RuntimeException(e);
                         }
 
@@ -232,7 +244,8 @@ public class NotificationsFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-                        loading.end();
+//                        loading.end();
+                        spinKitView.setVisibility(View.GONE);
                         //Toast.makeText(context, error+"", Toast.LENGTH_SHORT).show();
                     }
                 });

@@ -54,6 +54,8 @@ public class ActivitySignUp extends AppCompatActivity {
     RequestQueue requestQueue;
     Utils utils;
 
+    String BASE_API = new Constant().getBaseURL();
+
     private static final int FILE_SELECT_CODE = 0;
 
     TextView selectBill;
@@ -228,7 +230,7 @@ public class ActivitySignUp extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this);
 
         StringRequest myReq = new StringRequest(Request.Method.POST,
-                "https://gaarihazir.com/api/driver/register",
+                BASE_API+"driver/register",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
